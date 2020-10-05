@@ -31,6 +31,7 @@ const MyInspections = () => {
         <h1 className="title"> Your Inspections</h1>
         <ul>
             <li> Map Search Results Here</li>
+            <li> if Not search results, just map through photos, else map search results</li>
             <li>  - Ability to click on each inspection, fetch images</li>
 
         </ul>
