@@ -19,9 +19,9 @@ const SearchInspection = () => {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        fetch("/searchinspection", {
-            method: "POST",
-            body: JSON.stringify(formData),
+        fetch(`/inspection/one/${formData}`, {
+            method: "GET",
+            // body: JSON.stringify(formData),
             headers: {
                 "Content-Type": "application/json",
             },
@@ -61,19 +61,17 @@ return (
                 </div>
             </div>
         </form>
-        {currentSearch && currentSearch.map((inspection)=> {
-             return (
-                <div className="card" key={inspection.id}>
-                    <div className="subtitle">{inspection.name}</div>
-                    <div>{inspection.code}</div>
-                    <div className="carditem">
-                        <Link to={`myinspections/${inspection.id}`} className="inspection">
-                            See photos?
+        {currentSearch &&
+            <div className="card" key={currentSearch.id}>
+                <div className="subtitle">{currentSearch.name}</div>
+                <div>{currentSearch.code}</div>
+                <div className="carditem">
+                    <Link to={`myinspections/${currentSearch.id}`} className="inspection">
+                        Edit Inspection Page?
                     </Link>
-                    </div>
                 </div>
-            );
-        })}
+            </div>
+        }
     </div>
 );
 };
