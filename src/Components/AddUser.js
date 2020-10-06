@@ -1,8 +1,24 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect} from "react";
+
 
 const AddUser = ({ setCurrentUser }) => {
     const [formData, setFormData] = useState({});
+    const [inspections, setInspections] = useState(undefined)
+
+    // we may want to change this for sustainability measures
+     useEffect(() => {
+       fetch("/getinspections", {
+         method: "GET",
+         headers: {
+           "Content-Type": "application/json",
+         },
+       })
+         .then((res) => res.json())
+         .then((data) => {
+           setInspections(data);
+         });
+     }, []);
+
 
     const handleChange = (evt) => {
         setFormData({ ...formData, [evt.target.name]: evt.target.value });
@@ -10,7 +26,7 @@ const AddUser = ({ setCurrentUser }) => {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        fetch("/register", {
+        fetch("/adduser", {
             method: "POST",
             body: JSON.stringify(formData),
             headers: {
@@ -19,7 +35,8 @@ const AddUser = ({ setCurrentUser }) => {
         })
             .then((res) => res.json())
             .then((data) => {
-                setCurrentUser(data);
+                //we will probably want to change this
+                // setCurrentUser(data);
             });
     };
 
@@ -63,27 +80,12 @@ const AddUser = ({ setCurrentUser }) => {
                         <div className="control">
                             <div class="select">
                                 <select>
-                                    <option>Select dropdown</option>
-                                    <option>With options</option>
+                                    <option>123456789</option>
+                                    <option>14020020</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    {/* 
-                    <div className="field">
-                        <label className="label">Inspection</label>
-                        <div className="control">
-                            <input
-                                className="input"
-                                type="dropdown"
-                                placeholder="Zip Code"
-                                name="zipcode"
-                                id="zipcode"
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                    </div> */}
 
 
                     <div className="field">

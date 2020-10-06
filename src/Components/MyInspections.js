@@ -1,40 +1,85 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const MyInspections = () => {
+const MyInspections = ({ currentUser }) => {
+    const [myInspection, setMyInspection] = useState(undefined)
+    const [currentSearch, setCurrentSearch] = useState(undefined);
+    const [formData, setFormData] = useState("");
 
-    const [photos,setPhotos] = useState()
-    const [searchTerm,setSearchTerm] = useState("")
-    const [searchResults, setSearchResults] = useState([]);
-
-    const onChange = text => {
-        setSearchTerm(text)
-    }
 
     useEffect(() => {
-        fetch('/grabPhotos')
-        .then(r=>r.json())
-        .then(data=>setPhotos(data))
-    },[])
+        fetch("/addinspection", {
+            method: "POST",
+            body: JSON.stringify(currentUser.inspectionId),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setMyInspection(data);
+            });
+    }, [currentUser]);
 
-    
-    let results
-    if(searchTerm){
-        results = photos.filter(photo =>
-            photo.file_name.toLowerCase().includes(searchTerm)
-        );
+
+    const handleChange = (evt) => {
+        setFormData(evt.target.value);
     }
-    setSearchResults(results);
 
+    const Reset = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setCurrentSearch(undefined);
+        setFormData("");
+    };
 
-    return(<div>
+    const handleSubmit = (evt) => {
+        evt.preventDefault();
+        let filtered = myInspection.filter(
+            (inspection) => inspection.polenumber === Number(formData)
+        );
+        setCurrentSearch(filtered);
+    };
+
+    return (<div>
         <h1 className="title"> Your Inspections</h1>
-        <ul>
-            <li> Map Search Results Here</li>
-            <li> if Not search results, just map through photos, else map search results</li>
-            <li>  - Ability to click on each inspection, fetch images</li>
-
-        </ul>
+        <h2 className="title">Search</h2>
+        <form onSubmit={handleSubmit}>
+            <label>Pole Number</label>
+            <input
+                className="input"
+                type="text"
+                value={formData}
+                placeholder="Enter Pole Number"
+                onChange={handleChange}
+            />
+            <div className="field is-grouped">
+                <div className="control">
+                    <button className="button" type="submit">
+                        Search
+            </button>
+                </div>
+                <div className="control">
+                    <button className="button" onClick={Reset}>
+                        Reset
+            </button>
+                </div>
+            </div>
+        </form>
+        {!myInspection && <div>There are no inspections to show at this time</div>}
+        {!currentSearch && myInspection && myInspection.map((inspection) => {
+            return (
+                <div className="card" key={inspection.id}>
+                    <div className="subtitle">{inspection.name}</div>
+                    <div>{inspection.code}</div>
+                    <div className="carditem">
+                        <Link to={`myinspections/${inspection.id}`} className="inspection">
+                            See photos?
+                    </Link>
+                    </div>
+                </div>
+            );
+        })}
     </div>)
 
 }
