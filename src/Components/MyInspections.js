@@ -6,6 +6,7 @@ const MyInspections = ({ currentUser }) => {
     const [currentSearch, setCurrentSearch] = useState(undefined);
     const [formData, setFormData] = useState("");
 
+
     useEffect(() => {
         fetch("/addinspection", {
             method: "POST",
