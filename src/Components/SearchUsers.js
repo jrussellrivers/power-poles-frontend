@@ -19,9 +19,8 @@ const SearchUsers = () => {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        fetch("/searchuser", {
-            method: "POST",
-            body: JSON.stringify(formData),
+        fetch(`user/username/${formData}`, {
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -40,7 +39,7 @@ const SearchUsers = () => {
              </Link>
             <h2 className="subtitle">Search (and Edit) User</h2>
             <form onSubmit={handleSubmit}>
-                <label>User Id</label>
+                <label>Username</label>
                 <input
                     className="input"
                     type="text"
@@ -61,14 +60,13 @@ const SearchUsers = () => {
                     </div>
                 </div>
             </form>
-            {currentSearch && currentSearch.map((user)=>{
-                  return (
-                    <div className="card" key={user.id}>
-                        <div className="subtitle">{user.username}</div>
-                        <div>{user.inspectionId}</div>
-                        {user.admin ? <div>ADMIN </div>: <div> NOT ADMIN</div>}
-                    </div>)
-            })}
+            {currentSearch && 
+                    <div className="card" key={currentSearch.id}>
+                        <div className="subtitle">{currentSearch.username}</div>
+                        <div>{currentSearch.inspection_id}</div>
+                        {currentSearch.admin ? <div>ADMIN </div>: <div> NOT ADMIN</div>}
+                    </div>
+            }
         </div>
     );
 };
