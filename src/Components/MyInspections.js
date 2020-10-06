@@ -8,9 +8,9 @@ const MyInspections = ({ currentUser }) => {
 
 
     useEffect(() => {
-        fetch("/addinspection", {
-            method: "POST",
-            body: JSON.stringify(currentUser.inspectionId),
+        fetch("/grabAllPhotos", {
+            method: "get",
+            // body: JSON.stringify(currentUser.inspection_id),
             headers: {
                 "Content-Type": "application/json",
             },
@@ -20,7 +20,6 @@ const MyInspections = ({ currentUser }) => {
                 setMyInspection(data);
             });
     }, [currentUser]);
-
 
     const handleChange = (evt) => {
         setFormData(evt.target.value);
@@ -35,16 +34,37 @@ const MyInspections = ({ currentUser }) => {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        let filtered = myInspection.filter(
-            (inspection) => inspection.polenumber === Number(formData)
-        );
-        setCurrentSearch(filtered);
+        // let filtered = myInspection.filter(
+        //     (inspection) => inspection.polenumber === Number(formData)
+        // );
+        // let filtered = myInspection
+        // console.log(formData)
+        // if(formData){
+        //     filtered = myInspection.filter(photo => {
+        //         console.log(photo)
+        //         photo.file_name.includes(formData)
+        //     });
+        //     setCurrentSearch(filtered)
+        // } else {
+        //     setCurrentSearch(myInspection)
+        // }
     };
+
+    useEffect(() => {
+        if(formData){
+            let filtered = myInspection.filter(photo => {
+                return photo.file_name.includes(formData.toString())
+            });
+            setCurrentSearch(filtered)
+        } else {
+            setCurrentSearch(myInspection)
+        }
+    }, [formData, myInspection]);
 
     return (<div>
         <h1 className="title"> Your Inspections</h1>
         <h2 className="title">Search</h2>
-        <form onSubmit={handleSubmit}>
+        <form>
             <label>Pole Number</label>
             <input
                 className="input"
@@ -53,30 +73,19 @@ const MyInspections = ({ currentUser }) => {
                 placeholder="Enter Pole Number"
                 onChange={handleChange}
             />
-            <div className="field is-grouped">
-                <div className="control">
-                    <button className="button" type="submit">
-                        Search
-            </button>
-                </div>
-                <div className="control">
-                    <button className="button" onClick={Reset}>
-                        Reset
-            </button>
-                </div>
-            </div>
         </form>
         {!myInspection && <div>There are no inspections to show at this time</div>}
-        {!currentSearch && myInspection && myInspection.map((inspection) => {
+        {currentSearch && currentSearch.map((inspection) => {
             return (
-                <div className="card" key={inspection.id}>
-                    <div className="subtitle">{inspection.name}</div>
-                    <div>{inspection.code}</div>
-                    <div className="carditem">
+                <div className="card" key={inspection.photo_id}>
+                    <div className="subtitle">{inspection.file_name}</div>
+                    <div>{inspection.record_id}</div>
+                    <img src={`https://mcleanphotovault.s3.amazonaws.com/${inspection.form_id}/${inspection.file_name}.jpg`}/>
+                    {/* <div className="carditem">
                         <Link to={`myinspections/${inspection.id}`} className="inspection">
                             See photos?
                     </Link>
-                    </div>
+                    </div> */}
                 </div>
             );
         })}

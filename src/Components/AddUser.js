@@ -6,18 +6,18 @@ const AddUser = ({ setCurrentUser }) => {
     const [inspections, setInspections] = useState(undefined)
 
     // we may want to change this for sustainability measures
-     useEffect(() => {
-       fetch("/getinspections", {
-         method: "GET",
-         headers: {
-           "Content-Type": "application/json",
-         },
-       })
-         .then((res) => res.json())
-         .then((data) => {
-           setInspections(data);
-         });
-     }, []);
+    //  useEffect(() => {
+    //    fetch("/inspection/all", {
+    //      method: "GET",
+    //      headers: {
+    //        "Content-Type": "application/json",
+    //      },
+    //    })
+    //      .then((res) => res.json())
+    //      .then((data) => {
+    //        setInspections(data);
+    //      });
+    //  }, []);
 
 
     const handleChange = (evt) => {
@@ -26,7 +26,7 @@ const AddUser = ({ setCurrentUser }) => {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        fetch("/adduser", {
+        fetch("/register", {
             method: "POST",
             body: JSON.stringify(formData),
             headers: {
@@ -76,14 +76,17 @@ const AddUser = ({ setCurrentUser }) => {
                     </div>
 
                     <div className="field">
-                        <label className="label">Inspection</label>
+                        <label className="label">Inspection ID</label>
                         <div className="control">
-                            <div class="select">
-                                <select>
-                                    <option>123456789</option>
-                                    <option>14020020</option>
-                                </select>
-                            </div>
+                            <input
+                                className="input"
+                                type="text"
+                                placeholder="Enter Inspection ID"
+                                name="inspection_id"
+                                id="inspection_id"
+                                onChange={handleChange}
+                                required
+                            />
                         </div>
                     </div>
 
