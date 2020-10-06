@@ -4,13 +4,12 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
+  // Redirect,
 } from "react-router-dom";
 
 //components
 import Nav from "./Components/Nav"
 import Login from "./Components/Login";
-import Search from "./Components/Search";
 import SearchInspection from "./Components/SearchInspection";
 import SearchUsers from "./Components/SearchUsers";
 import MyInspections from "./Components/MyInspections";
@@ -34,7 +33,6 @@ function App() {
         </Route>
         <Route path="/myinspections">
           <MyInspections currentUser={currentUser} setCurrentUser={setCurrentUser} />
-          <Search currentUser={currentUser} setCurrentUser={setCurrentUser} />
         </Route>
         <Route path="/inspections">
           <SearchInspection currentUser={currentUser} setCurrentUser={setCurrentUser} />

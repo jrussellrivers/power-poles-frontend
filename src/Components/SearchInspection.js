@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const SearchInspection = () => {
-    const [currentInspection, setCurrentInspection] = useState(undefined)
     const [currentSearch, setCurrentSearch] = useState(undefined);
     const [formData, setFormData] = useState("");
 
@@ -17,44 +16,65 @@ const SearchInspection = () => {
         setFormData("");
     };
 
+
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        let filtered = currentInspection.filter(
-            (inspection) => inspection.polenumber === Number(formData)
-        );
-        setCurrentSearch(filtered);
-    };
+        fetch("/searchinspection", {
+            method: "POST",
+            body: JSON.stringify(formData),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setCurrentSearch(data);
+            });
+    }
 
-    return (
-        <div className="searchForm">
-            <h2 className="title">Inspections</h2>
-            <Link className="button is-link" to="/addinspection">
-                 Add Inspection
+return (
+    <div className="searchForm">
+        <h2 className="title">Inspections</h2>
+        <Link className="button is-link" to="/addinspection">
+            Add Inspection
                 </Link>
-            <h2 className="subtitle">Search (and Edit) Inspections</h2>
-            <form onSubmit={handleSubmit}>
-                <label>Inspection Number</label>
-                <input
-                    className="input"
-                    type="text"
-                    value={formData}
-                    placeholder="Enter Inspection Number"
-                    onChange={handleChange}
-                />
-                <div className="field is-grouped">
-                    <div className="control">
-                        <button className="button" type="submit">
-                            Search
+        <h2 className="subtitle">Search (and Edit) Inspections</h2>
+        <form onSubmit={handleSubmit}>
+            <label>Inspection Number</label>
+            <input
+                className="input"
+                type="text"
+                value={formData}
+                placeholder="Enter Inspection Number"
+                onChange={handleChange}
+            />
+            <div className="field is-grouped">
+                <div className="control">
+                    <button className="button" type="submit">
+                        Search
             </button>
-                    </div>
-                    <div className="control">
-                        <button className="button" onClick={Reset}>
-                            Reset
+                </div>
+                <div className="control">
+                    <button className="button" onClick={Reset}>
+                        Reset
             </button>
+                </div>
+            </div>
+        </form>
+        {currentSearch && currentSearch.map((inspection)=> {
+             return (
+                <div className="card" key={inspection.id}>
+                    <div className="subtitle">{inspection.name}</div>
+                    <div>{inspection.code}</div>
+                    <div className="carditem">
+                        <Link to={`myinspections/${inspection.id}`} className="inspection">
+                            See photos?
+                    </Link>
                     </div>
                 </div>
-            </form>
-        </div>
-    );
+            );
+        })}
+    </div>
+);
 };
 export default SearchInspection;

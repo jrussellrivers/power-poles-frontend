@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const SearchUsers = () => {
-    const [currentInspection, setCurrentInspection] = useState(undefined)
     const [currentSearch, setCurrentSearch] = useState(undefined);
     const [formData, setFormData] = useState("");
 
@@ -17,20 +16,28 @@ const SearchUsers = () => {
         setFormData("");
     };
 
+
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        let filtered = currentInspection.filter(
-            (inspection) => inspection.polenumber === Number(formData)
-        );
-        setCurrentSearch(filtered);
-    };
+        fetch("/searchuser", {
+            method: "POST",
+            body: JSON.stringify(formData),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setCurrentSearch(data);
+            });
+    }
 
     return (
         <div className="searchForm">
             <h2 className="title">Users</h2>
             <Link className="button is-link" to="/adduser">
-                 Add User
-                </Link>
+                Add User
+             </Link>
             <h2 className="subtitle">Search (and Edit) User</h2>
             <form onSubmit={handleSubmit}>
                 <label>User Id</label>
@@ -45,15 +52,23 @@ const SearchUsers = () => {
                     <div className="control">
                         <button className="button" type="submit">
                             Search
-            </button>
+                        </button>
                     </div>
                     <div className="control">
                         <button className="button" onClick={Reset}>
                             Reset
-            </button>
+                        </button>
                     </div>
                 </div>
             </form>
+            {currentSearch && currentSearch.map((user)=>{
+                  return (
+                    <div className="card" key={user.id}>
+                        <div className="subtitle">{user.username}</div>
+                        <div>{user.inspectionId}</div>
+                        {user.admin ? <div>ADMIN </div>: <div> NOT ADMIN</div>}
+                    </div>)
+            })}
         </div>
     );
 };
