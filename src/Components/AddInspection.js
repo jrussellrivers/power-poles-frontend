@@ -6,12 +6,13 @@ const AddInspection = () => {
   const [formData, setFormData] = useState({});
  
 
-  const handleChange = (evt) => {
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     fetch("/inspection/create", {
       method: "POST",
       body: JSON.stringify(formData),

@@ -5,8 +5,8 @@ const SearchInspection = () => {
     const [currentSearch, setCurrentSearch] = useState(undefined);
     const [formData, setFormData] = useState("");
 
-    const handleChange = (evt) => {
-        setFormData(evt.target.value);
+    const handleChange = (e) => {
+        setFormData(e.target.value);
     }
 
     const Reset = (e) => {
@@ -16,12 +16,12 @@ const SearchInspection = () => {
         setFormData("");
     };
 
-
-    const handleSubmit = (evt) => {
+  const handleSubmit = (evt) => {
         evt.preventDefault();
         fetch(`/inspection/one/${formData}`, {
             method: "GET",
             // body: JSON.stringify(formData),
+
             headers: {
                 "Content-Type": "application/json",
             },
@@ -61,6 +61,7 @@ return (
                 </div>
             </div>
         </form>
+
         {currentSearch &&
             <div className="card" key={currentSearch.id}>
                 <div className="subtitle">{currentSearch.name}</div>

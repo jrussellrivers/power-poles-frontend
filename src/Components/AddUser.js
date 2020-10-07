@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 
 const AddUser = ({ setCurrentUser }) => {
@@ -20,12 +20,12 @@ const AddUser = ({ setCurrentUser }) => {
     //  }, []);
 
 
-    const handleChange = (evt) => {
-        setFormData({ ...formData, [evt.target.name]: evt.target.value });
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (evt) => {
-        evt.preventDefault();
+    const handleSubmit = (e) => {
+        e.preventDefault();
         fetch("/register", {
             method: "POST",
             body: JSON.stringify(formData),
@@ -91,17 +91,17 @@ const AddUser = ({ setCurrentUser }) => {
                     </div>
 
 
-                    <div className="field">
-                        <label className="label">Admin?</label>
-                        <div className="control">
-                            <input
-                                className="checkbox"
-                                type="checkbox"
-                                name="admin"
-                                id="admin"
-                                onChange={handleChange}
-                                required
-                            />
+                    <div class="field">
+                        <div class="control">
+                            <label class="label">Admin?</label>
+                            <label class="radio">
+                                <input type="radio" name="adminBool" value="true" id="radio1" required />
+                                    Yes
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="adminBool" value="false" id="radio2" required />
+                                        No
+                            </label>
                         </div>
                     </div>
 

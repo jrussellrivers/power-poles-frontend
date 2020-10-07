@@ -9,7 +9,18 @@ export default function Nav({currentUser, setCurrentUser}) {
 
     const logOut = () => {
         setCurrentUser(undefined);
-      };
+
+        fetch("/logout", {
+          method: "GET",
+          headers: {
+              "Content-Type": "application/json",
+          },
+      })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("User is logged off!")
+          });
+  }
       
   return <div>
       <nav className="navbar is-dark">
