@@ -19,11 +19,11 @@ const SearchUsers = () => {
     };
 
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        fetch("/searchuser", {
-            method: "POST",
-            body: JSON.stringify(formData),
+
+    const handleSubmit = (evt) => {
+        evt.preventDefault();
+        fetch(`user/username/${formData}`, {
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -74,7 +74,7 @@ const SearchUsers = () => {
              </Link>
             <h2 className="subtitle">Search (and Edit) User</h2>
             <form onSubmit={handleSubmit}>
-                <label>User Id</label>
+                <label>Username</label>
                 <input
                     className="input"
                     type="text"
@@ -100,6 +100,7 @@ const SearchUsers = () => {
                         <div className="subtitle">{currentSearch.username}</div>
                         <div>{currentSearch.inspection_id}</div>
                         {currentSearch.admin ? <div>ADMIN </div>: <div> NOT ADMIN</div>}
+
                         <button onClick = {()=>setEditMode(true)}>Edit User</button>
                         <button onClick = {deleteUser(currentSearch.id)}>Delete User</button>
                         <button>Change Password</button>

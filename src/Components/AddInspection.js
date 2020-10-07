@@ -10,9 +10,10 @@ const AddInspection = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("/addinspection", {
+    fetch("/inspection/create", {
       method: "POST",
       body: JSON.stringify(formData),
       headers: {
@@ -76,22 +77,6 @@ const AddInspection = () => {
               />
             </div>
           </div>
-
-          <div className="field">
-            <label className="label">Bucket url</label>
-            <div className="control">
-              <input
-                className="input"
-                type="url"
-                placeholder="Enter Bucket url"
-                name="bucketUrl"
-                id="bucketUrl"
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
-
 
           <div className="field is-grouped">
             <div className="control">
