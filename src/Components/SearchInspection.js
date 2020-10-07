@@ -5,8 +5,8 @@ const SearchInspection = () => {
     const [currentSearch, setCurrentSearch] = useState(undefined);
     const [formData, setFormData] = useState("");
 
-    const handleChange = (evt) => {
-        setFormData(evt.target.value);
+    const handleChange = (e) => {
+        setFormData(e.target.value);
     }
 
     const Reset = (e) => {
@@ -17,8 +17,8 @@ const SearchInspection = () => {
     };
 
 
-    const handleSubmit = (evt) => {
-        evt.preventDefault();
+    const handleSubmit = (e) => {
+        e.preventDefault();
         fetch("/searchinspection", {
             method: "POST",
             body: JSON.stringify(formData),
@@ -68,7 +68,7 @@ return (
                     <div>{inspection.code}</div>
                     <div className="carditem">
                         <Link to={`myinspections/${inspection.id}`} className="inspection">
-                            See photos?
+                            Edit
                     </Link>
                     </div>
                 </div>

@@ -5,12 +5,12 @@ function Login({ currentUser, setCurrentUser }) {
   const [formData, setFormData] = useState({});
   const [loginError, setLoginError] = useState(undefined);
 
-  const handleChange = (evt) => {
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
     fetch("/login", {
       method: "POST",
       body: JSON.stringify(formData),
