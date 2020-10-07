@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAlert } from 'react-alert'
 
 const SearchInspection = () => {
+    const alert = useAlert()
+
     const [currentSearch, setCurrentSearch] = useState(undefined);
     const [formData, setFormData] = useState("");
 
@@ -28,7 +31,7 @@ const SearchInspection = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                setCurrentSearch(data);
+                data.status === true ? setCurrentSearch(data.content) : alert.show('No Inspection Found')
             });
     }
 

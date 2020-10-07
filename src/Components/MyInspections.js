@@ -75,9 +75,9 @@ const MyInspections = ({ currentUser }) => {
             />
         </form>
         {!myInspection && <div>There are no inspections to show at this time</div>}
-        {currentSearch && currentSearch.map((inspection) => {
+        {currentSearch && currentSearch.map((inspection, idx) => {
             return (
-                <div className="card" key={inspection.photo_id}>
+                <div className="card" key={idx}>
                     <div className="subtitle">{inspection.file_name}</div>
                     <div>{inspection.record_id}</div>
                     <img src={`https://mcleanphotovault.s3.amazonaws.com/${inspection.form_id}/${inspection.file_name}.jpg`}/>
