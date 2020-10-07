@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-
+import { useAlert } from 'react-alert'
 
 const AddInspection = () => {
+  const alert = useAlert()
 
   const [formData, setFormData] = useState({});
- 
+
 
   const handleChange = (evt) => {
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
@@ -21,8 +22,7 @@ const AddInspection = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        //we will probably want to change this
-        // setCurrentUser(data);
+        data.status === true ? alert.show('Inspection Created') : alert.show('Inspection ID Taken')
       });
   };
 

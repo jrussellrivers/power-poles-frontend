@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAlert } from 'react-alert'
 
 const SearchUsers = () => {
+    const alert = useAlert()
+
     const [currentSearch, setCurrentSearch] = useState(undefined);
     const [formData, setFormData] = useState("");
 
@@ -27,7 +30,7 @@ const SearchUsers = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                setCurrentSearch(data);
+                data.status === true ? setCurrentSearch(data.content) : alert.show('No User Found')
             });
     }
 
@@ -44,7 +47,7 @@ const SearchUsers = () => {
                     className="input"
                     type="text"
                     value={formData}
-                    placeholder="Enter User ID"
+                    placeholder="Enter Username"
                     onChange={handleChange}
                 />
                 <div className="field is-grouped">

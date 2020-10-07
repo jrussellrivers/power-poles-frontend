@@ -1,7 +1,9 @@
 import React, { useState, useEffect} from "react";
-
+import { useAlert } from 'react-alert'
 
 const AddUser = ({ setCurrentUser }) => {
+    const alert = useAlert()
+
     const [formData, setFormData] = useState({});
     const [inspections, setInspections] = useState(undefined)
 
@@ -35,8 +37,7 @@ const AddUser = ({ setCurrentUser }) => {
         })
             .then((res) => res.json())
             .then((data) => {
-                //we will probably want to change this
-                // setCurrentUser(data);
+                data.status === true ? alert.show('User Created') : alert.show('Username Already Taken')
             });
     };
 
