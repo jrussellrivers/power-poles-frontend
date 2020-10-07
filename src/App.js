@@ -23,7 +23,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState([])
   return (
     <Router>
-      <Nav />
+      <Nav currentUser={currentUser} setCurrentUser={setCurrentUser} />
       <Switch>
         <Route exact path="/">
           <h2>This is the homepage</h2>
