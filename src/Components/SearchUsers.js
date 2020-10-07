@@ -7,8 +7,11 @@ const SearchUsers = () => {
 
     const [currentSearch, setCurrentSearch] = useState(undefined);
     const [formData, setFormData] = useState("");
-    const [newUserInfo, setNewUserInfo] = useState({})
+    // const [newUserInfo, setNewUserInfo] = useState({})
     const [editMode, setEditMode] = useState(false)
+    const [newUsername, setNewUsername] = useState('')
+    const [newInspectionId, setNewInspectionId] = useState('')
+    const [newPassword, setNewPassword] = useState('')
 
     const handleChange = (e) => {
         setFormData(e.target.value);
@@ -33,30 +36,46 @@ const SearchUsers = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                data.status === true ? setCurrentSearch(data.content) : alert.show('No User Found')
+                if (data.status === true){
+                    setCurrentSearch(data.content)
+                    setNewUsername(data.content.username)
+                    setNewInspectionId(data.content.inspection_id)
+                } else {
+                    alert.show('No User Found')
+                }
             });
     }
 
-    const deleteUser = (id) => {
-        fetch("/deleteuser", {
-            method: "POST",
-            body: JSON.stringify(id),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-        .then(setCurrentSearch(undefined))  
-    }
+    // const deleteUser = (id) => {
+    //     fetch("/deleteuser", {
+    //         method: "POST",
+    //         body: JSON.stringify(id),
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //     })
+    //     .then(setCurrentSearch(undefined))  
+    // }
 
-    const handleEditChange = (e) => {
-        setNewUserInfo({... currentSearch, [e.target.name]: e.target.value});
-    }
+    // const handleEditChange = (e) => {
+    //     // setNewUserInfo({... currentSearch, [e.target.name]: e.target.value});
+    //     let copy = newUserInfo
+    //     copy[e.target.name] = e.target.value
+    //     setNewUserInfo(copy)
+    //     console.log(newUserInfo)
+    // }
 
     const handleEditSubmit = (e) => {
+        let edit
+        if (newPassword !== ''){
+            edit = {username: newUsername, inspection_id: newInspectionId, password: newPassword}
+        } else {
+            edit = {username: newUsername, inspection_id: newInspectionId}
+        }
         e.preventDefault();
-        fetch("/updateuser", {
+        fetch(`/user/edit/${currentSearch.id}`, {
             method: "POST",
-            body: JSON.stringify(newUserInfo),
+            body: JSON.stringify(edit),
             headers: {
               "Content-Type": "application/json",
             },
@@ -67,6 +86,7 @@ const SearchUsers = () => {
               // setCurrentUser(data);
             })
         setEditMode(false)
+        setCurrentSearch(undefined)
     }
 
     return (
@@ -105,7 +125,8 @@ const SearchUsers = () => {
                         {currentSearch.admin ? <div>ADMIN </div>: <div> NOT ADMIN</div>}
 
                         <button onClick = {()=>setEditMode(true)}>Edit User</button>
-                        <button onClick = {deleteUser(currentSearch.id)}>Delete User</button>
+                        {/* <button onClick = {deleteUser(currentSearch.id)}>Delete User</button> */}
+                        <button >Delete User</button>
                         <button>Change Password</button>
                     </div>
             }
@@ -122,8 +143,8 @@ const SearchUsers = () => {
                                 type="text"
                                 name="username"
                                 id="username"
-                                onChange={handleEditChange}
-                                placeholder = {currentSearch.username}
+                                onChange={(e)=>setNewUsername(e.target.value)}
+                                value = {newUsername}
                             />
                         </div>
                     </div>
@@ -136,7 +157,7 @@ const SearchUsers = () => {
                                 placeholder="Enter new password here!"
                                 name="password"
                                 id="password"
-                                onChange={handleEditChange}
+                                onChange={(e)=>setNewPassword(e.target.value)}
                             />
                         </div>
                     </div>
@@ -149,8 +170,8 @@ const SearchUsers = () => {
                                 type="text"
                                 name="inspection_id"
                                 id="inspection_id"
-                                onChange={handleEditChange}
-                                placeholder = {currentSearch.inspection_id}
+                                onChange={(e)=>setNewInspectionId(e.target.value)}
+                                value = {newInspectionId}
                             />
                         </div>
                     </div>
@@ -178,7 +199,11 @@ const SearchUsers = () => {
                     </button>
                         </div>
                         <div className="control">
-                            <button className="button" type="reset" id="cancel-button">
+                            <button className="button" type="reset" id="cancel-button" onClick={()=>{
+                                setEditMode(false)
+                                setNewUsername(currentSearch.username)
+                                setNewInspectionId(currentSearch.inspection_id)
+                                }}>
                                 Cancel
                             </button>
                         </div>
