@@ -32,21 +32,23 @@ export default function Nav({currentUser, setCurrentUser}) {
               <Link className="navbar-item" to="/login">
                 Login
               </Link>
+              {currentUser && !currentUser.admin && 
               <Link className="navbar-item" to="/myinspections">
-                My Inspections (U)
-              </Link>
-              {/* <Link className="navbar-item" to="/search">
-                Search (U)
-              </Link> */}
+                My Inspections
+              </Link>}
+              {currentUser && currentUser.admin &&
+              <React.Fragment>
               <Link className="navbar-item" to="/inspections">
-                Inspections (A)
+                Inspections
               </Link>
               <Link className="navbar-item" to="/users">
-                Users (A)
+                Users 
               </Link>
+              </React.Fragment>}
+              {currentUser && 
               <Link className="button" onClick={logOut}>
                 Log Out
-              </Link>
+              </Link>}
         </div>
       </nav>
   </div>;
