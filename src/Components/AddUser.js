@@ -38,7 +38,16 @@ const AddUser = ({ setCurrentUser }) => {
         })
             .then((res) => res.json())
             .then((data) => {
-                data.status === true ? alert.show('User Created') : alert.show('Username Already Taken')
+                // data.status === true ? alert.show('User Created') : alert.show('Username Already Taken')
+                if (data.status === true && data.i_status === true ) {
+                    alert.show('User Created')
+                } else if (data.status === false && data.i_status === true){
+                    alert.show('Username Already Taken')
+                } else if (data.status === true && data.i_status === false){
+                    alert.show('No Inspection Match')
+                } else {
+                    alert.show('Username Already Taken & No Inspection Match')
+                }
             });
     };
 
@@ -87,7 +96,6 @@ const AddUser = ({ setCurrentUser }) => {
                                 name="inspection_id"
                                 id="inspection_id"
                                 onChange={handleChange}
-                                required
                             />
                         </div>
                     </div>
@@ -97,11 +105,11 @@ const AddUser = ({ setCurrentUser }) => {
                         <div class="control">
                             <label class="label">Admin?</label>
                             <label class="radio">
-                                <input type="radio" name="adminBool" value="true" id="radio1" required />
+                                <input type="radio" name="admin" value={true} id="radio1" required onClick={handleChange}/>
                                     Yes
                             </label>
                             <label class="radio">
-                                <input type="radio" name="adminBool" value="false" id="radio2" required />
+                                <input type="radio" name="admin" value={false} id="radio2" required onClick={handleChange}/>
                                         No
                             </label>
                         </div>

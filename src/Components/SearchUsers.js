@@ -39,7 +39,7 @@ const SearchUsers = () => {
                 if (data.status === true){
                     setCurrentSearch(data.content)
                     setNewUsername(data.content.username)
-                    setNewInspectionId(data.content.inspection_id)
+                    data.content.inspection_id === null ? setNewInspectionId('') : setNewInspectionId(data.content.inspection_id)
                 } else {
                     alert.show('No User Found')
                 }
@@ -85,6 +85,7 @@ const SearchUsers = () => {
               //we will probably want to change this
               // setCurrentUser(data);
             })
+            alert.show('User edited')
         setEditMode(false)
         setCurrentSearch(undefined)
     }
@@ -127,7 +128,7 @@ const SearchUsers = () => {
                         <button onClick = {()=>setEditMode(true)}>Edit User</button>
                         {/* <button onClick = {deleteUser(currentSearch.id)}>Delete User</button> */}
                         <button >Delete User</button>
-                        <button>Change Password</button>
+                        {/* <button>Change Password</button> */}
                     </div>
             }
             {/* //allows you to edit!  */}
@@ -154,7 +155,7 @@ const SearchUsers = () => {
                             <input
                                 className="input"
                                 type="password"
-                                placeholder="Enter new password here!"
+                                placeholder="Enter new password here/Leave blank for no change"
                                 name="password"
                                 id="password"
                                 onChange={(e)=>setNewPassword(e.target.value)}
@@ -175,7 +176,7 @@ const SearchUsers = () => {
                             />
                         </div>
                     </div>
-                    <div class="field">
+                    {/* <div class="field">
                         <div class="control">
                             <label class="label">Admin?</label>
                             <label class="radio">
@@ -187,7 +188,7 @@ const SearchUsers = () => {
                                         No
                             </label>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="field is-grouped">
                         <div className="control">
                             <button
