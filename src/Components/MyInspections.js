@@ -9,7 +9,7 @@ const MyInspections = ({ currentUser }) => {
 
     useEffect(() => {
         fetch("/grabAllPhotos", {
-            method: "get",
+            method: "GET",
             // body: JSON.stringify(currentUser.inspection_id),
             headers: {
                 "Content-Type": "application/json",
