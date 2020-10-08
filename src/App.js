@@ -15,12 +15,13 @@ import SearchUsers from "./Components/SearchUsers";
 import MyInspections from "./Components/MyInspections";
 import AddInspection from "./Components/AddInspection";
 import AddUser from "./Components/AddUser";
+import ProtectedRoute from "./Components/ProtectedRoute"
 
 
 
 
 function App() {
-  const [currentUser, setCurrentUser] = useState([])
+  const [currentUser, setCurrentUser] = useState(undefined)
   return (
     <Router>
       <Nav currentUser={currentUser} setCurrentUser={setCurrentUser} />
@@ -30,22 +31,37 @@ function App() {
         </Route>
         <Route path="/login">
           <Login currentUser={currentUser} setCurrentUser={setCurrentUser} />
-        </Route>
-        <Route path="/myinspections">
-          <MyInspections currentUser={currentUser} setCurrentUser={setCurrentUser} />
-        </Route>
-        <Route path="/inspections">
-          <SearchInspection currentUser={currentUser} setCurrentUser={setCurrentUser} />
-        </Route>
-        <Route path="/addinspection">
-          <AddInspection currentUser={currentUser} setCurrentUser={setCurrentUser} />
-        </Route>
-        <Route path="/adduser">
-          <AddUser currentUser={currentUser} setCurrentUser={setCurrentUser} />
-        </Route>
-        <Route path="/users">
-          <SearchUsers currentUser={currentUser} setCurrentUser={setCurrentUser} />
-        </Route>
+          </Route>
+          <ProtectedRoute
+            path="/myinspections"
+            currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
+            component={MyInspections}
+          />
+          <ProtectedRoute
+            path="/inspections"
+            currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
+            component={SearchInspection}
+          />
+          <ProtectedRoute
+            path="/addinspection"
+            currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
+            component={AddInspection}
+          />
+          <ProtectedRoute
+            path="/adduser"
+            currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
+            component={AddUser}
+          />
+          <ProtectedRoute
+            path="/users"
+            currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
+            component={SearchUsers}
+          />
       </Switch>
     </Router>
   );
