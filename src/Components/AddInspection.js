@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAlert } from 'react-alert'
+import { Link } from "react-router-dom";
 
 const AddInspection = () => {
   const alert = useAlert()
@@ -89,9 +90,9 @@ const AddInspection = () => {
                     </button>
             </div>
             <div className="control">
-              <button className="button" type="reset" id="cancel-button">
-                Cancel
-                    </button>
+              <Link className="button is-link" to="/inspections" >
+                  Cancel
+              </Link>
             </div>
           </div>
 

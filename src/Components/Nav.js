@@ -29,9 +29,10 @@ export default function Nav({currentUser, setCurrentUser}) {
         </div>
 
         <div className="navbar-end">
+              {!currentUser && 
               <Link className="navbar-item" to="/login">
                 Login
-              </Link>
+              </Link>}
               {currentUser && !currentUser.admin && 
               <Link className="navbar-item" to="/myinspections">
                 My Inspections
@@ -46,7 +47,7 @@ export default function Nav({currentUser, setCurrentUser}) {
               </Link>
               </React.Fragment>}
               {currentUser && 
-              <Link className="button" onClick={logOut}>
+              <Link className="navbar-item" onClick={logOut}>
                 Log Out
               </Link>}
         </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from "react";
 import { useAlert } from 'react-alert'
+import { Link } from "react-router-dom";
 
 
 const AddUser = ({ setCurrentUser }) => {
@@ -126,9 +127,9 @@ const AddUser = ({ setCurrentUser }) => {
                     </button>
                         </div>
                         <div className="control">
-                            <button className="button" type="reset" id="cancel-button">
+                            <Link className="button is-link" to="/users" >
                                 Cancel
-                    </button>
+                            </Link>
                         </div>
                     </div>
 
