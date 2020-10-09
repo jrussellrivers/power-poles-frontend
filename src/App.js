@@ -18,7 +18,7 @@ import AllInspections from "./Components/AllInspections"
 import EditInspection from './Components/EditInspection'
 import AllUsers from "./Components/AllUsers"
 import EditUser from "./Components/EditUser"
-
+import SinglePole from "./Components/SinglePole"
 
 
 
@@ -30,7 +30,6 @@ function App() {
       <Nav currentUser={currentUser} setCurrentUser={setCurrentUser} />
       <Switch>
         <Route exact path="/">
-          {/* <h2>This is the homepage</h2> */}
         </Route>
         <Route path="/login">
           <Login currentUser={currentUser} setCurrentUser={setCurrentUser} />
@@ -78,6 +77,12 @@ function App() {
             currentUser={currentUser}
             setCurrentUser={setCurrentUser}
             component={EditUser}
+          />
+          <ProtectedRoute
+            path="/singlepole"
+            currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
+            component={SinglePole}
           />
       </Switch>
     </Router>

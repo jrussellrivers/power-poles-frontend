@@ -21,6 +21,8 @@ const AllInspections = () => {
             });
     }, []);
 
+    console.log(currentSearch)
+    console.log(allInspections)
     const handleChange = (evt) => {
         setFormData(evt.target.value);
     }
