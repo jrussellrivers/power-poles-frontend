@@ -82,12 +82,15 @@ const MyInspections = ({ currentUser }) => {
                         <img className='photo' src={`https://mcleanphotovault.s3.amazonaws.com/${inspection.form_id}/${inspection.file_name}.jpg`}/>
                         {inspection.file_name}
                     </div>
-                    {/* <div>{inspection.record_id}</div> */}
-                    {/* <div className="carditem">
-                        <Link to={`myinspections/${inspection.id}`} className="inspection">
-                            See photos?
-                    </Link>
-                    </div> */}
+                    <div>
+                        <Link className="is-link" to={{
+                            pathname: '/singlepole',
+                            currentPole:inspection
+                        }} >
+                            See Details
+                        </Link>
+                    </div>
+                   
                 </div>
             );
         })}

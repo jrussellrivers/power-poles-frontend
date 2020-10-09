@@ -22,3 +22,24 @@
     margin: 10px;
     padding: 5px;
 }
+
+.singlephoto{
+    align-content: center;
+    height:100%;
+    padding: 8px;
+}
+
+.photocontainer{
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    text-align: center;
+}
+
+.img-container{
+    margin: 8px;
+}
+
+.image-magnify{
+    width: 80%;
+}
