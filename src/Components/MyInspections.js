@@ -78,9 +78,11 @@ const MyInspections = ({ currentUser }) => {
         {currentSearch && currentSearch.map((inspection, idx) => {
             return (
                 <div className="card" key={idx}>
-                    <div className="subtitle">{inspection.file_name}</div>
-                    <div>{inspection.record_id}</div>
-                    <img src={`https://mcleanphotovault.s3.amazonaws.com/${inspection.form_id}/${inspection.file_name}.jpg`}/>
+                    <div className="photoDiv">
+                        <img className='photo' src={`https://mcleanphotovault.s3.amazonaws.com/${inspection.form_id}/${inspection.file_name}.jpg`}/>
+                        {inspection.file_name}
+                    </div>
+                    {/* <div>{inspection.record_id}</div> */}
                     {/* <div className="carditem">
                         <Link to={`myinspections/${inspection.id}`} className="inspection">
                             See photos?
