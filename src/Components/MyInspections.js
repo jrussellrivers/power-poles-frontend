@@ -1,30 +1,16 @@
-<<<<<<< HEAD
-=======
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAlert } from 'react-alert'
 
-const MyInspections = ({ currentUser }) => {
-    const [myInspection, setMyInspection] = useState(undefined)
+const MyInspections = () => {
+    const alert = useAlert()
+
     const [currentSearch, setCurrentSearch] = useState(undefined);
     const [formData, setFormData] = useState("");
 
 
-    useEffect(() => {
-        fetch("/grabAllPhotos", {
-            method: "GET",
-            // body: JSON.stringify(currentUser.inspection_id),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setMyInspection(data);
-            });
-    }, [currentUser]);
-
-    const handleChange = (evt) => {
-        setFormData(evt.target.value);
+    const handleChange = (e) => {
+        setFormData(e.target.value);
     }
 
     const Reset = (e) => {
@@ -34,60 +20,60 @@ const MyInspections = ({ currentUser }) => {
         setFormData("");
     };
 
-    const handleSubmit = (evt) => {
+  const handleSubmit = (evt) => {
         evt.preventDefault();
-        // let filtered = myInspection.filter(
-        //     (inspection) => inspection.polenumber === Number(formData)
-        // );
-        // let filtered = myInspection
-        // console.log(formData)
-        // if(formData){
-        //     filtered = myInspection.filter(photo => {
-        //         console.log(photo)
-        //         photo.file_name.includes(formData)
-        //     });
-        //     setCurrentSearch(filtered)
-        // } else {
-        //     setCurrentSearch(myInspection)
-        // }
-    };
+        fetch(`/grabAllPhotos/${formData}`, {
+            method: "GET",
+            // body: JSON.stringify(formData),
 
-    useEffect(() => {
-        if(formData){
-            let filtered = myInspection.filter(photo => {
-                return photo.file_name.includes(formData.toString())
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setCurrentSearch(data)
             });
-            setCurrentSearch(filtered)
-        } else {
-            setCurrentSearch(myInspection)
-        }
-    }, [formData, myInspection]);
+    }
 
-    return (<div>
-        <h1 className="title"> Your Inspections</h1>
-        <h2 className="title">Search</h2>
-        <form>
-            <label>Pole Number</label>
+return (
+    <div className="searchForm">
+        <h2 className="title">My Inspection</h2>
+
+        <h2 className="subtitle">Search Pole Locations by Name<br/>(Limit 100 Results)</h2>
+        <form onSubmit={handleSubmit}>
+            <label>Pole Name</label>
             <input
                 className="input"
                 type="text"
                 value={formData}
-                placeholder="Enter Pole Number"
+                placeholder="Enter Pole Name Here"
                 onChange={handleChange}
             />
+            <div className="field is-grouped">
+                <div className="control">
+                    <button className="button" type="submit">
+                        Search
+            </button>
+                </div>
+                <div className="control">
+                    <button className="button" onClick={Reset}>
+                        Reset
+            </button>
+                </div>
+            </div>
         </form>
-        {!myInspection && <div>There are no inspections to show at this time</div>}
-        {currentSearch && currentSearch.map((inspection, idx) => {
+        {currentSearch && currentSearch.map((photo, idx) => {
             return (
                 <div className="card" key={idx}>
                     <div className="photoDiv">
-                        <img className='photo' src={`https://mcleanphotovault.s3.amazonaws.com/${inspection.form_id}/${inspection.file_name}.jpg`}/>
-                        {inspection.file_name}
+                        <img className='thumbnailPhoto' src={`https://mcleanphotovault.s3.amazonaws.com/${photo.form_id}/${photo.file_name}.jpg`}/>
+                        {photo.file_name}
                     </div>
                     <div>
                         <Link className="is-link" to={{
                             pathname: '/singlepole',
-                            currentPole:inspection
+                            currentPole:photo
                         }} >
                             See Details
                         </Link>
@@ -96,10 +82,10 @@ const MyInspections = ({ currentUser }) => {
                 </div>
             );
         })}
+
     </div>)
 
 }
 
 
 export default MyInspections
->>>>>>> origin/main

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 
 
 const SinglePole = (props) => {
@@ -14,7 +16,13 @@ const SinglePole = (props) => {
             <div className="img-container">
                 <img src={`https://mcleanphotovault.s3.amazonaws.com/${inspection.form_id}/${inspection.file_name}.jpg`} className = "image-magnify" />;
             </div>
-            
+            <div>
+                        <Link className="is-link" to={{
+                            pathname: '/myinspections',
+                        }} >
+                            Back To Search
+                        </Link>
+                    </div>
         </div>
     </div>)
 
