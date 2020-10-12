@@ -2,9 +2,9 @@
     width: 75px;
 }
 
-.photo{
+.thumbnailPhoto{
     margin:  5px;
-    /* max-width: 50px; */
+    max-width: 50px;
 }
 
 .photoDiv{
@@ -41,5 +41,5 @@
 }
 
 .image-magnify{
-    width: 80%;
+    width: 90%;
 }
