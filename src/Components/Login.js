@@ -46,7 +46,7 @@ function Login({ currentUser, setCurrentUser }) {
           </div>
           <div className="field">
             <label className="label">Password</label>
-            <div className="control has-icons-left has-icons-right">
+            <div className="control">
               <input
                 className="input"
                 type="password"
