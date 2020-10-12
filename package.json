@@ -10,6 +10,8 @@
     "react-alert": "^7.0.2",
     "react-alert-template-basic": "^1.0.0",
     "react-dom": "^16.13.1",
+    "react-image-magnifiers": "^1.4.0",
+    "react-magnifier": "^3.0.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3"
   },
